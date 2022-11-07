@@ -9,13 +9,13 @@ using AnimalShelter.Repository;
 
 namespace AnimalShelter.Controllers
 {
-  [Authorize]
+  //[Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class AnimalsController : ControllerBase
   {
     private readonly AnimalShelterContext _db;
-
+    private readonly IJWTManagerRepository _jWTManager;
 	  public AnimalsController(IJWTManagerRepository jWTManager, AnimalShelterContext db)
     {
       this._jWTManager = jWTManager;
@@ -40,7 +40,7 @@ namespace AnimalShelter.Controllers
     
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Animal>>> Get(string species, string name, int animalAge)
+    public async Task<ActionResult<IEnumerable<Animal>>> Get(string animalSpecies, string animalName, int animalAge)
     {
       var query = _db.Animals.AsQueryable();
 
@@ -49,53 +49,50 @@ namespace AnimalShelter.Controllers
         query = query.Where(entry => entry.AnimalName == animalName);
       }
 
-      if (species != null)
+      if (animalSpecies != null)
       {
-        query = query.Where(entry => entry.Species == species);
+        query = query.Where(entry => entry.AnimalSpecies == animalSpecies);
       }
 
-      if (team != null)
+      if (animalAge > 0)
       {
-        query = query.Where(entry => entry.Team == team);
-      }
-      
-      var playerList = query.ToList();
-      foreach(Player player in playerList)
-      {
-        var PlayerPositionDTO = new PlayerPositionDTO() { FirstName = player.FirstName , LastName = player.LastName, Team = player.Team}; 
-        var PlayerPositionList = new List<string>(){};
-        foreach(PlayerPosition join in player.JoinEntities)
-        {
-          var position = join.Position.PositionName;
-          PlayerPositionList.Add(position);
-        }
-        PlayerPositionDTO.PositionName = PlayerPositionList;
-        playerPosition.Add(PlayerPositionDTO);
+        query = query.Where(entry => entry.AnimalAge == animalAge);
       }
 
-      return playerPosition;
+      return await query.ToListAsync();
     }
 
-    // POST api/players
-    [HttpPost]
-    public async Task<ActionResult<Player>> Post(Player player)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Animal>> GetAnimal(int id)
     {
-      _db.Players.Add(player);
+      var animal = await _db.Animals.FindAsync(id);
+
+      if (animal == null)
+      {
+        return NotFound();
+      }
+
+      return animal;
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<Animal>> Post(Animal animal)
+    {
+      _db.Animals.Add(animal);
       await _db.SaveChangesAsync();
 
-      return CreatedAtAction(nameof(Player), new { id = player.PlayerId }, player);
+      return CreatedAtAction("Post", new { id = animal.AnimalId }, animal);
     }
 
-    // PUT: api/Players/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Player player)
+    public async Task<IActionResult> Put(int id, Animal animal)
     {
-      if (id != player.PlayerId)
+      if (id != animal.AnimalId)
       {
         return BadRequest();
       }
 
-      _db.Entry(player).State = EntityState.Modified;
+      _db.Entry(animal).State = EntityState.Modified;
 
       try
       {
@@ -103,7 +100,7 @@ namespace AnimalShelter.Controllers
       }
       catch (DbUpdateConcurrencyException)
       {
-        if (!PlayerExists(id))
+        if (!AnimalExists(id))
         {
           return NotFound();
         }
@@ -115,22 +112,21 @@ namespace AnimalShelter.Controllers
 
       return NoContent();
     }
-    private bool PlayerExists(int id)
+    private bool AnimalExists(int id)
     {
-      return _db.Players.Any(e => e.PlayerId == id);
+      return _db.Animals.Any(e => e.AnimalId == id);
     }
 
-    // DELETE: api/Players/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeletePlayer(int id)
+    public async Task<IActionResult> DeleteAnimal(int id)
     {
-      var player = await _db.Players.FindAsync(id);
-      if (player == null)
+      var animal = await _db.Animals.FindAsync(id);
+      if (animal == null)
       {
         return NotFound();
       }
 
-      _db.Players.Remove(player);
+      _db.Animals.Remove(animal);
       await _db.SaveChangesAsync();
 
       return NoContent();

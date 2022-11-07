@@ -30,7 +30,6 @@ namespace AnimalShelter.Repository
 				return null;
 			}
 
-			// Else we generate JSON Web Token
 			var tokenHandler = new JwtSecurityTokenHandler();
 			var tokenKey = Encoding.UTF8.GetBytes(iconfiguration["JWT:Key"]);
 			var tokenDescriptor = new SecurityTokenDescriptor
