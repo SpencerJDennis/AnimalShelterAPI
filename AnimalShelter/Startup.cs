@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BasketballRatings.Repository;
 
-namespace BasketballRatings
+namespace AnimalShelter
 {
     public class Startup
     {

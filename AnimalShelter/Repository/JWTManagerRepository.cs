@@ -1,4 +1,4 @@
-using BasketballRatings.Models;
+using AnimalShelter.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BasketballRatings.Repository
+namespace AnimalShelter.Repository
 {
 	public class JWTManagerRepository : IJWTManagerRepository
 	{

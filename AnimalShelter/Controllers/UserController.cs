@@ -2,7 +2,7 @@ using BasketballRatings.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using BasketballRatings.Repository;
+using AnimalShelter.Repository;
 
 [Authorize]
 [Route("api/[controller]")]
@@ -21,10 +21,7 @@ public class UsersController : ControllerBase
 	{
 		var users = new List<string>
 		{
-			"Harold Mesa",
-			"Spencer Dennis",
-			"Helen Lehrer",
-      "Ted Gold"
+			"Spencer Dennis"
 		};
 
 		return users;

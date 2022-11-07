@@ -1,22 +1,20 @@
-using DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BasketballRatings.Models;
+using AnimalShelter.Models;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using BasketballRatings.Repository;
+using AnimalShelter.Repository;
 
-namespace BasketballRatings.Controllers
+namespace AnimalShelter.Controllers
 {
   [Authorize]
   [Route("api/[controller]")]
   [ApiController]
-  public class PlayersController : ControllerBase
+  public class AnimalsController : ControllerBase
   {
-    private readonly IJWTManagerRepository _jWTManager;
-    private readonly BasketballRatingsContext _db;
+    private readonly AnimalShelterContext _db;
 
 	  public PlayersController(IJWTManagerRepository jWTManager, BasketballRatingsContext db)
     {

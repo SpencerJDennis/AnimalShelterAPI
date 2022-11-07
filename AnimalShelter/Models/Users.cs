@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BasketballRatings.Models
+namespace AnimalShelter.Models
 {
   public class Users
   {
