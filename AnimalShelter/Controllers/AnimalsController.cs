@@ -16,13 +16,13 @@ namespace AnimalShelter.Controllers
   {
     private readonly AnimalShelterContext _db;
 
-	  public PlayersController(IJWTManagerRepository jWTManager, BasketballRatingsContext db)
+	  public AnimalsController(IJWTManagerRepository jWTManager, AnimalShelterContext db)
     {
       this._jWTManager = jWTManager;
       _db = db;
     }
 
-    [AllowAnonymous]
+    
     [HttpPost]
     [Route("authenticate")]
     public IActionResult Authenticate(Users usersdata)
@@ -39,22 +39,19 @@ namespace AnimalShelter.Controllers
 
     
 
-    // GET api/players
     [HttpGet]
-    public ActionResult<List<PlayerPositionDTO>> Get (string firstName, string lastName, string team)
+    public async Task<ActionResult<IEnumerable<Animal>>> Get(string species, string name, int animalAge)
     {
-      List<PlayerPositionDTO> playerPosition = new List<PlayerPositionDTO>(){};
+      var query = _db.Animals.AsQueryable();
 
-      var query = _db.Players.Include(player => player.JoinEntities).ThenInclude(join => join.Position).AsQueryable();
-
-      if (firstName != null)
+      if (animalName != null)
       {
-        query = query.Where(entry => entry.FirstName == firstName);
+        query = query.Where(entry => entry.AnimalName == animalName);
       }
 
-      if (lastName != null)
+      if (species != null)
       {
-        query = query.Where(entry => entry.LastName == lastName);
+        query = query.Where(entry => entry.Species == species);
       }
 
       if (team != null)

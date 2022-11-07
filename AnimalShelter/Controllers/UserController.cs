@@ -1,4 +1,4 @@
-using BasketballRatings.Models;
+using AnimalShelter.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;

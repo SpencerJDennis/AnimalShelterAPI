@@ -4,11 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using BasketballRatings.Models;
+using AnimalShelter.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using BasketballRatings.Repository;
+using AnimalShelter.Repository;
 
 namespace AnimalShelter
 {
@@ -45,7 +45,7 @@ namespace AnimalShelter
             });
 
             services.AddSingleton<IJWTManagerRepository, JWTManagerRepository>();
-            services.AddDbContext<BasketballRatingsContext>(opt =>
+            services.AddDbContext<AnimalShelterContext>(opt =>
                 opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
             services.AddControllers();
         }
