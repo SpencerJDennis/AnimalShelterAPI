@@ -15,7 +15,7 @@
 
 ## Description
 
-_An API where you can access the dogs and cats in an animal shelter. The animals have species, id, name, and age. When you make a request to the Animal Shelter API, you will specify an HTTP method and a path. Additionally, you might also specify request headers and path, query, or body parameters. The API will return the response status code, response headers, and potentially a response body.
+_An API where you can access the dogs and cats in an animal shelter. The animals have species, id, name, and age. When you make a request to the Animal Shelter API, you will specify an HTTP method and a path. If implemented correctly users should be able to display all animals available in the shelter/add,edit, and delete animals.
 
 ## Documentation/EndPoints
 
@@ -41,7 +41,7 @@ _In the API reader you are using using postman as an example, you can also set p
 
 ## Setup/Installation Requirements
 
-* _Clone the repository using $git clone._
+* _Clone the repository using $git clone https://github.com/SpencerJDennis/AnimalShelterAPI._
 * _Open the project using $code ._
 * _Build the project using $dotnet build._
 * _Create a file called appsettings.json in the directory of your project's production folder, AnimalShelter_
